@@ -36,7 +36,8 @@ to match the gamepad layout.
 * Action buttons got their keybinds replaced by gamepad button icons.
 * Out-of-Range actions will be displayed as a gray-scaled texture.
 * The loot window is automatically positioned to have the most relevant part of it under your cursor.
-* The chat window sits in the top right corner, flush against the right edge, and got buttons removed.
+* The chat window sits in the top right corner, 5 cm away from the right edge, and got buttons removed.
+* The mouseover tooltip is raised 5 cm from its default bottom-right position.
 * Clicking on the chat window will zoom it and raise it above the rest of the UI to make space for the onscreen keyboard.
 
 ![Keyboard](screenshots/keyboard.jpg)

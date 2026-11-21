@@ -55,6 +55,16 @@ for id, frame in pairs(normtextures) do hide(frame, 2) end
 -- create a jump button
 ActionButtonJmp = CreateFrame("CheckButton", "ActionButtonJmp", MainMenuBarArtFrame, "ActionButtonTemplate")
 
+-- raise the default mouseover tooltip 5cm (~189px) without moving it sideways
+local tooltip_default_anchor = GameTooltip_SetDefaultAnchor
+function GameTooltip_SetDefaultAnchor(tooltip, parent)
+  tooltip_default_anchor(tooltip, parent)
+  tooltip:ClearAllPoints()
+  tooltip:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT",
+    -CONTAINER_OFFSET_X - 13,
+    CONTAINER_OFFSET_Y + 189)
+end
+
 local ui = CreateFrame("Frame", "WoWControllerUI", UIParent)
 ui:RegisterEvent("PLAYER_ENTERING_WORLD")
 ui:SetScript("OnEvent", function()
@@ -190,16 +200,16 @@ local buttonmap = {
    { 12, "DISABLED" },
 }
 
--- chat window layout: flush against the right edge, above the right action buttons
+-- chat window layout: 5cm inset from the right edge, above the right action buttons
 ui.chat_layout_normal = function()
   ChatFrameEditBox:ClearAllPoints()
-  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 426)
+  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -189, 426)
   ChatFrameEditBox:SetWidth(300)
   ChatFrameEditBox:SetScale(1)
 
   ChatFrame1:SetScale(1)
   ChatFrame1:ClearAllPoints()
-  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 246)
+  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -189, 246)
   ChatFrame1:SetWidth(300)
   ChatFrame1:SetHeight(180)
 end
