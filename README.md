@@ -1,6 +1,6 @@
 # WoWController
 
-This is a fork of ShaguController (https://github.com/shagu/ShaguController) edited to be useable in PC with Dualshock or Xbox Controller.
+This is a fork of ShaguController (https://github.com/shagu/ShaguController) edited to be usable with Dualshock or Xbox Controller.
 
 > WARNING: This addon changes in-game keybinds to align with the SteamDeck's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after.
 

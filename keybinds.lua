@@ -20,10 +20,10 @@ keybinds:SetScript("OnEvent", function()
     SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
     -- Jump                                             -- A
     SetBinding("5", "ACTIONBUTTON5")                    -- Arrow-Up
-    SetBinding("6", "ACTIONBUTTON10")                   -- Arrow-Right
-    SetBinding("7", "ACTIONBUTTON11")                   -- Arrow-Down
-    SetBinding("8", "ACTIONBUTTON12")                   -- Arrow-Down
-    SetBinding("9", "ACTIONBUTTON12")                   -- Left-Stick-click
+    SetBinding("6", "ACTIONBUTTON6")                   -- Arrow-Right
+    SetBinding("7", "ACTIONBUTTON7")                   -- Arrow-Down
+    SetBinding("8", "ACTIONBUTTON8")                   -- Arrow-Down
+    SetBinding("9", "ACTIONBUTTON9")                   -- Left-Stick-click
     SaveBindings(GetCurrentBindingSet())
 
     -- notify the player for keybind changes
