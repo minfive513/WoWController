@@ -180,14 +180,14 @@ local buttonmap = {
    -- are usually mapped and mandatory skills for me. If you want to continue
    -- the line, change this to 7,8,9 and change the disabled ones to 10,11,12.
    -- also make sure to update the keybinds.lua accordingly.
-   { 10, "BOTTOMLEFT", 265,  90, "Interface\\AddOns\\WoWController\\img\\right" },
-   { 11, "BOTTOMLEFT", 220,  45, "Interface\\AddOns\\WoWController\\img\\down" },
-   { 12, "BOTTOMLEFT", 175,  90, "Interface\\AddOns\\WoWController\\img\\left" },
+   { 7, "BOTTOMLEFT", 265,  90, "Interface\\AddOns\\WoWController\\img\\right" },
+   { 8, "BOTTOMLEFT", 220,  45, "Interface\\AddOns\\WoWController\\img\\down" },
+   { 9, "BOTTOMLEFT", 175,  90, "Interface\\AddOns\\WoWController\\img\\left" },
 
    -- disabled
-   { 7, "DISABLED" },
-   { 8, "DISABLED" },
-   { 9, "DISABLED" },
+   { 10, "DISABLED" },
+   { 11, "DISABLED" },
+   { 12, "DISABLED" },
 }
 
 -- chat window layout: docked in the top right, directly left of the minimap

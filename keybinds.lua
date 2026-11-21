@@ -17,11 +17,13 @@ keybinds:SetScript("OnEvent", function()
     SetBinding("1", "ACTIONBUTTON1")                    -- Y
     SetBinding("2", "ACTIONBUTTON2")                    -- X
     SetBinding("3", "ACTIONBUTTON3")                    -- B
+    SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
     -- Jump                                             -- A
-    SetBinding("UP", "ACTIONBUTTON5")                   -- Arrow-Up
-    SetBinding("RIGHT", "ACTIONBUTTON10")               -- Arrow-Right
-    SetBinding("DOWN", "ACTIONBUTTON11")                -- Arrow-Down
-    SetBinding("LEFT", "ACTIONBUTTON12")                -- Arrow-Down
+    SetBinding("5", "ACTIONBUTTON5")                    -- Arrow-Up
+    SetBinding("6", "ACTIONBUTTON10")                   -- Arrow-Right
+    SetBinding("7", "ACTIONBUTTON11")                   -- Arrow-Down
+    SetBinding("8", "ACTIONBUTTON12")                   -- Arrow-Down
+    SetBinding("9", "ACTIONBUTTON12")                   -- Left-Stick-click
     SaveBindings(GetCurrentBindingSet())
 
     -- notify the player for keybind changes
