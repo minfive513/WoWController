@@ -190,16 +190,16 @@ local buttonmap = {
    { 12, "DISABLED" },
 }
 
--- chat window layout: docked in the top right, directly left of the minimap
+-- chat window layout: below the minimap, left of the right action buttons
 ui.chat_layout_normal = function()
   ChatFrameEditBox:ClearAllPoints()
-  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", Minimap, "TOPLEFT", -8, -26)
+  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -300, 350)
   ChatFrameEditBox:SetWidth(300)
   ChatFrameEditBox:SetScale(1)
 
   ChatFrame1:SetScale(1)
   ChatFrame1:ClearAllPoints()
-  ChatFrame1:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", -12, -62)
+  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -300, 170)
   ChatFrame1:SetWidth(300)
   ChatFrame1:SetHeight(180)
 end
@@ -314,21 +314,6 @@ ui.manage_positions = function(a1, a2, a3)
 
   -- skin jump button
   ui:manage_jump_button(ActionButtonJmp)
-
-  -- move and hide some chat buttons
-  ChatFrameMenuButton:Hide()
-  ChatFrameMenuButton.Show = function() return end
-
-  for i=1, NUM_CHAT_WINDOWS do
-    _G["ChatFrame"..i.."DownButton"]:ClearAllPoints()
-    _G["ChatFrame"..i.."DownButton"]:SetPoint("BOTTOMRIGHT", _G["ChatFrame"..i], "BOTTOMRIGHT", 0, -5)
-
-    _G["ChatFrame"..i.."UpButton"]:ClearAllPoints()
-    _G["ChatFrame"..i.."UpButton"]:SetPoint("RIGHT", _G["ChatFrame"..i.."DownButton"], "LEFT", 0, 0)
-
-    _G["ChatFrame"..i.."BottomButton"]:Hide()
-    _G["ChatFrame"..i.."BottomButton"].Show = function() return end
-  end
 
   -- move pet action bar
   local anchor = MainMenuBarArtFrame
