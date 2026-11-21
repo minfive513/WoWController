@@ -1,0 +1,35 @@
+<Bindings>
+  <!-- WoWControl Custom Buttons -->
+  <Binding name="WOWCONTROL0" runOnUp="true" header="WOWCONTROL">ShaguControlButton(0)</Binding>
+  
+  <!-- UP: Inventory -->
+  <Binding name="WOWCONTROL1" runOnUp="true">
+    if ( keystate == "down" ) then
+      ToggleCharacter("PaperDollFrame")
+      ToggleKeyRing()
+      OpenAllBags()
+    end
+  </Binding>
+  
+  <!-- RIGHT: QuestLog -->
+  <Binding name="WOWCONTROL2" runOnUp="true">
+    if ( keystate == "down" ) then
+      ToggleQuestLog()
+    end
+  </Binding>
+  
+  <!-- DOWN: Talents & Social -->
+  <Binding name="WOWCONTROL3" runOnUp="true">
+    if ( keystate == "down" ) then
+      ToggleTalentFrame()
+      ToggleFriendsFrame()
+    end
+  </Binding>
+  
+  <!-- LEFT: Spellbook -->
+  <Binding name="WOWCONTROL4" runOnUp="true">
+    if ( keystate == "down" ) then
+      ToggleSpellBook(BOOKTYPE_SPELL)
+    end
+  </Binding>
+</Bindings>

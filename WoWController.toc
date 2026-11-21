@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: |cffffcc00WoW|cffffffffController
+## Author: Shagu
+## Notes: Adds a basic controller compatible UI and bindings
+## SavedVariablesPerCharacter: WoWControllerConfig
+## Version: GIT
+
+core.lua
+
+keybinds.lua
+loot.lua
+ui.lua
