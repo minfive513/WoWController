@@ -1,11 +1,8 @@
 # WoWController
 
-A World of Warcraft (1.12) addon that enhances the default user interface to be more controller friendly. This addon is made with the [SteamDeck](https://www.steamdeck.com/en/) in mind. If you don't use a SteamDeck you need to use another software to map controller buttons to keyboard buttons.
+This is a fork of ShaguController (https://github.com/shagu/ShaguController) edited to be useable in PC with Dualshock or Xbox Controller.
 
 > WARNING: This addon changes in-game keybinds to align with the SteamDeck's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after.
-
-![Overview](screenshots/overview.jpg)
-*(Addons used: WoWController, ShaguTweaks, ShaguPlates, pfQuest)*
 
 ## Installation (Vanilla, 1.12)
 1. Download **[Latest Version](<repository-url>/archive/master.zip)**
@@ -16,7 +13,7 @@ A World of Warcraft (1.12) addon that enhances the default user interface to be 
 
 ## Keybinding
 
-The addon sets in-game keybinds based on the button mappings provided by SteamDeck's "Keyboard (WASD) and Mouse"-Layout:
+The addon sets in-game keybinds based on the button mappings provided by Controller "Keyboard (WASD) and Mouse"-Layout:
 ![Mapping](screenshots/mapping.jpg)
 
 * The A button is bound to jump
@@ -48,25 +45,10 @@ to match the gamepad layout.
 ![Outofrange](screenshots/outofrange.jpg)
 *Buttons shade to grayscale if out of range*
 
-# Play on SteamDeck
+# Install
 
-> Prerequisite: You already have the game copied over to the steamdeck.
-
-Enter the Desktop Mode, navigate to your World of Warcraft directory and install the add-on as usual:
+Navigate to your World of Warcraft directory and install the add-on as usual:
 
     cd Interface/AddOns
     git clone <repository-url>
     cd -
-
-Open Steam Library and click on "[+] Add a Game" and select "Add a Non-Steam Game...".
-Browse to your World of Warcraft Folder and select WoW.exe. Then choose "Add Selected Programs".
-Find the "WoW.exe" in your Steam Library and right click -> Properties. You can set the name there to: World of Warcraft
-
-Next, open the Steam Settings and navigate to "Steam Play". There you want to enable: "Enable Steam Play for all other titles".
-The preselected proton version should be fine. If something doesn't work or you have graphical glitches, try to select another version there.
-
-## AutoLogin
-
-Entering an account and password on a Steam Deck can be a hassle. A client patch like [Turtle-Autologin](https://github.com/Haaxor1689/turtle-autologin) or
-[Vanilla-Autologin](https://github.com/Haaxor1689/vanilla-autologin) can help by adding an account selection field to the login screen.
-Follow the install instructions there to get it running.

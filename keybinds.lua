@@ -8,15 +8,15 @@ keybinds:SetScript("OnEvent", function()
 
     -- overwrite keybindings on login
     SetBinding("TAB", "TOGGLEWORLDMAP")                 -- Window (TabKey)
-    SetBinding("1", "WOWCONTROL1")                    -- Trackpad-Up: Inventory + Character
-    SetBinding("2", "WOWCONTROL2")                    -- Trackpad-Right: QuestLog
-    SetBinding("3", "WOWCONTROL3")                    -- Trackpad-Down: Talents & Social
-    SetBinding("4", "WOWCONTROL4")                    -- Trackpad-Left: Spellbook
+    SetBinding("c", "WOWCONTROL1")                    -- Trackpad-Up: Inventory + Character
+    SetBinding("l", "WOWCONTROL2")                    -- Trackpad-Right: QuestLog
+    SetBinding("n", "WOWCONTROL3")                    -- Trackpad-Down: Talents & Social
+    SetBinding("p", "WOWCONTROL4")                    -- Trackpad-Left: Spellbook
     SetBinding("MOUSEWHEELDOWN", "TARGETPREVIOUSENEMY") -- L1
     SetBinding("MOUSEWHEELUP", "TARGETNEARESTENEMY")    -- R1
-    SetBinding("F", "ACTIONBUTTON1")                    -- Y
-    SetBinding("R", "ACTIONBUTTON2")                    -- X
-    SetBinding("E", "ACTIONBUTTON3")                    -- B
+    SetBinding("1", "ACTIONBUTTON1")                    -- Y
+    SetBinding("2", "ACTIONBUTTON2")                    -- X
+    SetBinding("3", "ACTIONBUTTON3")                    -- B
     -- Jump                                             -- A
     SetBinding("UP", "ACTIONBUTTON5")                   -- Arrow-Up
     SetBinding("RIGHT", "ACTIONBUTTON10")               -- Arrow-Right
