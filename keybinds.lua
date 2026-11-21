@@ -7,7 +7,7 @@ keybinds:SetScript("OnEvent", function()
     keybinds.previous_bindings = GetCurrentBindingSet()
 
     -- overwrite keybindings on login
-    SetBinding("TAB", "TOGGLEWORLDMAP")                 -- Window (TabKey)
+    SetBinding("m", "TOGGLEWORLDMAP")                 -- Window (TabKey)
     SetBinding("c", "WOWCONTROL1")                    -- Trackpad-Up: Inventory + Character
     SetBinding("l", "WOWCONTROL2")                    -- Trackpad-Right: QuestLog
     SetBinding("n", "WOWCONTROL3")                    -- Trackpad-Down: Talents & Social

@@ -6,8 +6,6 @@
   <Binding name="WOWCONTROL1" runOnUp="true">
     if ( keystate == "down" ) then
       ToggleCharacter("PaperDollFrame")
-      ToggleKeyRing()
-      OpenAllBags()
     end
   </Binding>
   
