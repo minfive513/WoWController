@@ -190,16 +190,16 @@ local buttonmap = {
    { 12, "DISABLED" },
 }
 
--- chat window layout: below the minimap, left of the right action buttons
+-- chat window layout: flush against the right edge, above the right action buttons
 ui.chat_layout_normal = function()
   ChatFrameEditBox:ClearAllPoints()
-  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -300, 350)
+  ChatFrameEditBox:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 426)
   ChatFrameEditBox:SetWidth(300)
   ChatFrameEditBox:SetScale(1)
 
   ChatFrame1:SetScale(1)
   ChatFrame1:ClearAllPoints()
-  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -300, 170)
+  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 246)
   ChatFrame1:SetWidth(300)
   ChatFrame1:SetHeight(180)
 end
