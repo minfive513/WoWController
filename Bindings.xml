@@ -1,7 +1,18 @@
 <Bindings>
-  <!-- WoWControl Custom Buttons -->
-  <Binding name="WOWCONTROL0" runOnUp="true" header="WOWCONTROL">ShaguControlButton(0)</Binding>
-  
+  <!-- WoWController Action Bar -->
+  <Binding name="WOWACTIONB1" header="WOWACTIONBAR">CLICK ActionButton1:LeftButton</Binding>
+  <Binding name="WOWACTIONB2" header="WOWACTIONBAR">CLICK ActionButton2:LeftButton</Binding>
+  <Binding name="WOWACTIONB3" header="WOWACTIONBAR">CLICK ActionButton3:LeftButton</Binding>
+  <Binding name="WOWACTIONB4" header="WOWACTIONBAR">CLICK ActionButton4:LeftButton</Binding>
+  <Binding name="WOWACTIONB5" header="WOWACTIONBAR">CLICK ActionButton5:LeftButton</Binding>
+  <Binding name="WOWACTIONB6" header="WOWACTIONBAR">CLICK ActionButton6:LeftButton</Binding>
+  <Binding name="WOWACTIONB7" header="WOWACTIONBAR">CLICK ActionButton7:LeftButton</Binding>
+  <Binding name="WOWACTIONB8" header="WOWACTIONBAR">CLICK ActionButton8:LeftButton</Binding>
+  <Binding name="WOWACTIONB9" header="WOWACTIONBAR">CLICK ActionButton9:LeftButton</Binding>
+
+  <!-- WoWController Custom Buttons -->
+
+ 
   <!-- UP: Inventory -->
   <Binding name="WOWCONTROL1" runOnUp="true">
     if ( keystate == "down" ) then

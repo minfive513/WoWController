@@ -55,7 +55,7 @@ for id, frame in pairs(normtextures) do hide(frame, 2) end
 -- create a jump button
 ActionButtonJmp = CreateFrame("CheckButton", "ActionButtonJmp", MainMenuBarArtFrame, "ActionButtonTemplate")
 
--- raise the default mouseover tooltip 5cm (~189px) without moving it sideways
+-- raise the default mouseover tooltip (~189px) vertical
 local tooltip_default_anchor = GameTooltip_SetDefaultAnchor
 function GameTooltip_SetDefaultAnchor(tooltip, parent)
   tooltip_default_anchor(tooltip, parent)
@@ -216,6 +216,7 @@ end
 
 -- chat window layout: enlarged for the on-screen keyboard
 ui.chat_layout_zoom = function()
+  ui.chat_save_layers()
   ChatFrameEditBox:ClearAllPoints()
   ChatFrameEditBox:SetPoint("TOP", UIParent, "TOP", 0, -10)
   ChatFrameEditBox:SetWidth(300)

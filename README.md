@@ -14,7 +14,7 @@ This is a fork of ShaguController (https://github.com/shagu/ShaguController) edi
 ## Keybinding
 
 The addon sets in-game keybinds based on the button mappings provided by Controller "Keyboard (WASD) and Mouse"-Layout:
-![Mapping](screenshots/mapping.jpg)
+![Mapping](screenshots/mapping.jpeg)
 
 * The A button is bound to jump
 * The Y, B and X buttons are bound to the 3 action buttons on the right side
@@ -40,11 +40,11 @@ to match the gamepad layout.
 * The mouseover tooltip is raised 5 cm from its default bottom-right position.
 * Clicking on the chat window will zoom it and raise it above the rest of the UI to make space for the onscreen keyboard.
 
-![Keyboard](screenshots/keyboard.jpg)
+![Keyboard](screenshots/chatframeFullscreen.jpg)
 *Chat is moved, to make space for screen keyboard*
 
-![Outofrange](screenshots/outofrange.jpg)
-*Buttons shade to grayscale if out of range*
+![Outofrange](screenshots/movedToolTip.jpg)
+*Moved tool tip message so it cannot overlap with the action bar buttons*
 
 # Install
 
