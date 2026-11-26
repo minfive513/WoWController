@@ -466,11 +466,11 @@ ui.osk_move = function(dx, dy)
     kb.selected = kb.selected - 1
     if kb.selected < 1 then kb.selected = n end
   elseif dy == 1 then
-    kb.selected = kb.selected + kb.columns
-    if kb.selected > n then kb.selected = n end
-  elseif dy == -1 then
     kb.selected = kb.selected - kb.columns
     if kb.selected < 1 then kb.selected = 1 end
+  elseif dy == -1 then
+    kb.selected = kb.selected + kb.columns
+    if kb.selected > n then kb.selected = n end
   end
   ui.osk_update_highlight()
 end
@@ -503,12 +503,13 @@ end)
 kb:SetScript("OnKeyDown", function()
   if not WoWControllerKeyboard:IsVisible() then return end
   local key = arg1
-  if key == "LEFT" then ui.osk_move(-1, 0)
-  elseif key == "RIGHT" then ui.osk_move(1, 0)
-  elseif key == "UP" then ui.osk_move(0, -1)
-  elseif key == "DOWN" then ui.osk_move(0, 1)
-  elseif key == "ENTER" or key == "SPACE" then ui.osk_pick()
-  elseif key == "BACKSPACE" then key_backspace()
+  if key == "A" or key == "a" then ui.osk_move(-1, 0)
+  elseif key == "D" or key == "d" then ui.osk_move(1, 0)
+  elseif key == "W" or key == "w" then ui.osk_move(0, 1)
+  elseif key == "S" or key == "s" then ui.osk_move(0, -1)
+  elseif key == "3" then ui.osk_pick()
+  elseif key == "SPACE" then key_insert(" ")
+  elseif key == "2" then key_backspace()
   elseif key == "ESCAPE" then ui.osk_cancel()
   end
 end)
