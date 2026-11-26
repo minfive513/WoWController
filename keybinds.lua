@@ -14,16 +14,16 @@ keybinds:SetScript("OnEvent", function()
     -- SetBinding("p", "WOWCONTROL4")                    -- Trackpad-Left: Spellbook
     -- SetBinding("MOUSEWHEELDOWN", "TARGETPREVIOUSENEMY") -- L1
     -- SetBinding("MOUSEWHEELUP", "TARGETNEARESTENEMY")    -- R1
-    -- SetBinding("1", "ACTIONBUTTON1")                    -- Y
-    -- SetBinding("2", "ACTIONBUTTON2")                    -- X
-    -- SetBinding("3", "ACTIONBUTTON3")                    -- B
-    -- SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
+    SetBinding("1", "ACTIONBUTTON1")                    -- Y
+    SetBinding("2", "ACTIONBUTTON2")                    -- X
+    SetBinding("3", "ACTIONBUTTON3")                    -- B
+    SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
     -- -- Jump                                             -- A
     SetBinding("UP", "ACTIONBUTTON5")                    -- Arrow-Up
-    SetBinding("DOWN", "ACTIONBUTTON6")                   -- Arrow-Right
-    SetBinding("LEFT", "ACTIONBUTTON7")                   -- Arrow-Down
-    SetBinding("RIGHT", "ACTIONBUTTON8")                   -- Arrow-Down
-    SetBinding("6", "ACTIONBUTTON9")                   -- Left-Stick-click
+    SetBinding("6", "ACTIONBUTTON6")                   -- Arrow-Right
+    SetBinding("RIGHT", "ACTIONBUTTON7")                   -- Arrow-Down
+    SetBinding("DOWN", "ACTIONBUTTON8")                   -- Arrow-Down
+    SetBinding("LEFT", "ACTIONBUTTON9")                   -- Left-Stick-click
     SaveBindings(GetCurrentBindingSet())
 
     -- notify the player for keybind changes

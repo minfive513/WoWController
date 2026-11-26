@@ -447,6 +447,14 @@ make_key("Space", 200, keyH, pad, bottomY, function() key_insert(" ") end)
 make_key("Backspace", 150, keyH, pad + 200 + pad, bottomY, key_backspace)
 make_key("Enter", 150, keyH, pad + 200 + pad + 150 + pad, bottomY, key_enter)
 
+local modeY = bottomY + keyH + pad
+make_key("say", 150, keyH, pad, modeY, function() key_insert("/say ") end)
+make_key("group", 150, keyH, pad + 150 + pad, modeY, function() key_insert("/group ") end)
+make_key("raid", 150, keyH, pad + (150 + pad) * 2, modeY, function() key_insert("/raid ") end)
+make_key("guild", 150, keyH, pad + (150 + pad) * 3, modeY, function() key_insert("/guild ") end)
+make_key("Close", 150, keyH, pad, modeY + keyH + pad, function() ui.osk_cancel() end)
+kb:SetHeight(modeY + keyH * 2 + pad * 3)
+
 ui.osk_update_highlight = function()
   local b = kb.keys[kb.selected]
   if not b then kb.highlight:Hide() return end
@@ -507,10 +515,10 @@ kb:SetScript("OnKeyDown", function()
   elseif key == "RIGHT" or key == "d" then ui.osk_move(1, 0)
   elseif key == "DOWN" or key == "w" then ui.osk_move(0, 1)
   elseif key == "UP" or key == "s" then ui.osk_move(0, -1)
-  elseif key == "ENTER" then ui.osk_pick()
-  elseif key == "SPACE" then key_insert(" ")
-  elseif key == "BACKSPACE" then key_backspace()
-  elseif key == "ESCAPE" then ui.osk_cancel()
+  elseif key == "SPACE" then ui.osk_pick()
+  elseif key == "2" then key_insert(" ")
+  elseif key == "1" then key_backspace()
+  elseif key == "ESCAPE" or key == "3" then ui.osk_cancel()
   end
 end)
 
