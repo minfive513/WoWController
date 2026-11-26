@@ -320,7 +320,7 @@ local kb = CreateFrame("Frame", "WoWControllerKeyboard", UIParent)
 kb:SetFrameStrata("FULLSCREEN")
 kb:SetWidth(640)
 kb:SetHeight(248)
-kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
+kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -44)
 kb:EnableKeyboard(false)
 kb:Hide()
 
