@@ -356,13 +356,28 @@ kb:SetFrameStrata("FULLSCREEN")
 kb:SetWidth(640)
 kb:SetHeight(248)
 kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -66)
-kb:EnableKeyboard(false)
+kb:EnableKeyboard(true)
 kb:Hide()
+kb.keys = {}
+kb.selected = 1
+kb.columns = 10
+kb.controller_mode = true
+
+kb.highlight = CreateFrame("Frame", nil, kb)
+kb.highlight:SetFrameLevel(60)
+kb.highlight:SetBackdrop({ edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 8, insets = { left = 0, right = 0, top = 0, bottom = 0 } })
+kb.highlight:SetBackdropBorderColor(1, 1, 0, 1)
+kb.highlight:Hide()
 
 local function kb_editbox()
   local eb = ChatFrameEditBox or ChatFrame1EditBox
-  if eb then eb:Show(); eb:SetFocus() end
+  if eb then eb:Show() end
   return eb
+end
+
+local function kb_refocus(eb)
+  if not eb then return end
+  if kb.controller_mode then eb:ClearFocus() else eb:SetFocus() end
 end
 
 local function key_insert(text)
@@ -373,25 +388,25 @@ local function key_insert(text)
   else
     eb:SetText(eb:GetText() .. text)
   end
-  eb:SetFocus()
+  kb_refocus(eb)
 end
 
 local function key_backspace()
   local eb = kb_editbox()
   if not eb then return end
   eb:SetText(string.sub(eb:GetText() or "", 1, -2))
-  eb:SetFocus()
+  kb_refocus(eb)
 end
 
 local function key_enter()
   local eb = ChatFrameEditBox or ChatFrame1EditBox
   if not eb then return end
-  eb:SetFocus()
   if ChatEdit_SendText then ChatEdit_SendText(eb, 1) end
   eb:SetText("")
   eb:ClearFocus()
   eb:Hide()
   if WoWControllerKeyboard then WoWControllerKeyboard:Hide() end
+  if kb.highlight then kb.highlight:Hide() end
   if ui.chat_restore_layers then ui.chat_restore_layers() end
   if ui.chat_layout_normal then ui.chat_layout_normal() end
 end
@@ -402,7 +417,10 @@ local function make_key(text, w, h, x, y, onclick)
   b:SetHeight(h)
   b:SetPoint("TOPLEFT", kb, "TOPLEFT", x, y)
   b:SetText(text)
-  b:SetScript("OnClick", onclick or function() key_insert(text) end)
+  local action = onclick or function() key_insert(text) end
+  b.osk_action = action
+  b:SetScript("OnClick", action)
+  table.insert(kb.keys, b)
   return b
 end
 
@@ -428,6 +446,72 @@ local bottomY = pad + table.getn(kb_rows) * (keyH + pad)
 make_key("Space", 200, keyH, pad, bottomY, function() key_insert(" ") end)
 make_key("Backspace", 150, keyH, pad + 200 + pad, bottomY, key_backspace)
 make_key("Enter", 150, keyH, pad + 200 + pad + 150 + pad, bottomY, key_enter)
+
+ui.osk_update_highlight = function()
+  local b = kb.keys[kb.selected]
+  if not b then kb.highlight:Hide() return end
+  kb.highlight:ClearAllPoints()
+  kb.highlight:SetAllPoints(b)
+  kb.highlight:SetFrameLevel(60)
+  kb.highlight:Show()
+end
+
+ui.osk_move = function(dx, dy)
+  local n = table.getn(kb.keys)
+  if n == 0 then return end
+  if dx == 1 then
+    kb.selected = kb.selected + 1
+    if kb.selected > n then kb.selected = 1 end
+  elseif dx == -1 then
+    kb.selected = kb.selected - 1
+    if kb.selected < 1 then kb.selected = n end
+  elseif dy == 1 then
+    kb.selected = kb.selected + kb.columns
+    if kb.selected > n then kb.selected = n end
+  elseif dy == -1 then
+    kb.selected = kb.selected - kb.columns
+    if kb.selected < 1 then kb.selected = 1 end
+  end
+  ui.osk_update_highlight()
+end
+
+ui.osk_pick = function()
+  local b = kb.keys[kb.selected]
+  if not b or not b.osk_action then return end
+  b.osk_action()
+  local eb = ChatFrameEditBox or ChatFrame1EditBox
+  if kb.controller_mode and eb then eb:ClearFocus() end
+  ui.osk_update_highlight()
+end
+
+ui.osk_cancel = function()
+  local eb = ChatFrameEditBox or ChatFrame1EditBox
+  if eb then eb:ClearFocus(); eb:Hide() end
+  if WoWControllerKeyboard then WoWControllerKeyboard:Hide() end
+  if kb.highlight then kb.highlight:Hide() end
+  if ui.chat_restore_layers then ui.chat_restore_layers() end
+  if ui.chat_layout_normal then ui.chat_layout_normal() end
+end
+
+kb:SetScript("OnShow", function()
+  kb.selected = 1
+  local eb = ChatFrameEditBox or ChatFrame1EditBox
+  if eb then eb:ClearFocus() end
+  if ui.osk_update_highlight then ui.osk_update_highlight() end
+end)
+
+kb:SetScript("OnKeyDown", function()
+  if not WoWControllerKeyboard:IsVisible() then return end
+  local key = arg1
+  if key == "LEFT" then ui.osk_move(-1, 0)
+  elseif key == "RIGHT" then ui.osk_move(1, 0)
+  elseif key == "UP" then ui.osk_move(0, -1)
+  elseif key == "DOWN" then ui.osk_move(0, 1)
+  elseif key == "ENTER" or key == "SPACE" then ui.osk_pick()
+  elseif key == "BACKSPACE" then key_backspace()
+  elseif key == "ESCAPE" then ui.osk_cancel()
+  end
+end)
 
 ui.manage_positions = function(a1, a2, a3)
   -- run original function first
