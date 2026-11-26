@@ -434,10 +434,8 @@ local leftX = pad
 local rightX = pad + leftKeyW * 2 + pad * 2
 
 local left_rows = {
-  { { "Space", function() key_insert(" ") end }, { "raid", function() key_insert("/raid ") end }   },
-  { { "Enter", key_enter }, { "say", function() key_insert("/say ") end } },
-  { { "group", function() key_insert("/group ") end }, { "Backspace", key_backspace }},
-  { { "guild", function() key_insert("/guild ") end }, { "Close", function() ui.osk_cancel() end }},
+  { { "say", function() key_insert("/say ") end }, { "group", function() key_insert("/p ") end } },
+  { { "raid", function() key_insert("/raid ") end }, { "guild", function() key_insert("/guild ") end } },
 }
 for r = 1, table.getn(left_rows) do
   local row = left_rows[r]
@@ -466,8 +464,23 @@ for r = 1, table.getn(kb_rows) do
   end
 end
 
+local rightBottomY = pad + table.getn(kb_rows) * (keyH + pad)
+local rightTotalW = table.getn(kb_rows[1]) * (keyW + pad) - pad
+local bottomKeys = {
+  { "Space", function() key_insert(" ") end },
+  { "Backspace", key_backspace },
+  { "Enter", key_enter },
+  { "Close", function() ui.osk_cancel() end },
+}
+local bottomKeyW = math.floor((rightTotalW - (table.getn(bottomKeys) - 1) * pad) / table.getn(bottomKeys))
+for i = 1, table.getn(bottomKeys) do
+  local bk = bottomKeys[i]
+  local x = rightX + (i - 1) * (bottomKeyW + pad)
+  make_key(bk[1], bottomKeyW, keyH, x, rightBottomY, bk[2], "right", 5, i)
+end
+
 kb:SetWidth(rightX + table.getn(kb_rows[1]) * (keyW + pad) + pad)
-kb:SetHeight(pad + table.getn(kb_rows) * (keyH + pad))
+kb:SetHeight(pad + (table.getn(kb_rows) + 1) * (keyH + pad))
 
 ui.osk_update_highlight = function()
   local b = kb.keys[kb.selected]
@@ -489,35 +502,68 @@ ui.osk_move = function(dx, dy)
   end
 
   local zone, row, col = cur.osk_zone, cur.osk_row, cur.osk_col
-  local rightCols = 10
-  local leftCols = 2
-  local maxRows = 4
+  local leftCols, leftMaxRow = 2, 2
+  local rightCols, rightMaxRow, rightBottomCols = 10, 5, 4
+
+  local function rightColsForRow(r)
+    if r == 5 then return rightBottomCols end
+    return rightCols
+  end
 
   if dx == 1 then
     if zone == "left" then
-      if col < leftCols then col = col + 1
-      else zone, col = "right", 1 end
-    else
-      if col < rightCols then col = col + 1 end
+      if col < leftCols then
+        col = col + 1
+      else
+        zone = "right"
+        col = 1
+        if row > 4 then row = 4 end
+      end
+    elseif zone == "right" then
+      if col < rightColsForRow(row) then col = col + 1 end
     end
   elseif dx == -1 then
     if zone == "right" then
-      if col > 1 then col = col - 1
-      else zone, col = "left", leftCols end
-    else
+      if col > 1 then
+        col = col - 1
+      else
+        zone = "left"
+        col = leftCols
+        if row > leftMaxRow then row = leftMaxRow end
+      end
+    elseif zone == "left" then
       if col > 1 then col = col - 1 end
     end
   elseif dy == 1 then
-    if row < maxRows then row = row + 1 end
+    if zone == "left" then
+      if row < leftMaxRow then row = row + 1 end
+    elseif zone == "right" then
+      if row < 4 then
+        row = row + 1
+      elseif row == 4 then
+        row = 5
+        col = math.floor((col - 1) * rightBottomCols / rightCols) + 1
+      end
+    end
   elseif dy == -1 then
-    if row > 1 then row = row - 1 end
+    if zone == "left" then
+      if row > 1 then row = row - 1 end
+    elseif zone == "right" then
+      if row > 1 and row <= 4 then
+        row = row - 1
+      elseif row == 5 then
+        row = 4
+        col = math.floor((col - 1) * rightCols / rightBottomCols) + 1
+      end
+    end
   end
 
   for i = 1, n do
     local b = kb.keys[i]
     if b.osk_zone == zone and b.osk_row == row and b.osk_col == col then
       kb.selected = i
-      break
+      ui.osk_update_highlight()
+      return
     end
   end
   ui.osk_update_highlight()
