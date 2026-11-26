@@ -320,7 +320,7 @@ local kb = CreateFrame("Frame", "WoWControllerKeyboard", UIParent)
 kb:SetFrameStrata("FULLSCREEN")
 kb:SetWidth(640)
 kb:SetHeight(248)
-kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -44)
+kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -66)
 kb:EnableKeyboard(false)
 kb:Hide()
 
@@ -367,10 +367,10 @@ local function make_key(text, w, h, x, y, onclick)
 end
 
 local kb_rows = {
-  {"1","2","3","4","5","6","7","8","9","0"},
-  {"q","w","e","r","t","y","u","i","o","p"},
-  {"a","s","d","f","g","h","j","k","l",";"},
   {"z","x","c","v","b","n","m",",",".","/"},
+  {"a","s","d","f","g","h","j","k","l",";"},
+  {"q","w","e","r","t","y","u","i","o","p"},
+  {"1","2","3","4","5","6","7","8","9","0"},
 }
 
 local keyW, keyH, pad = 60, 44, 4
