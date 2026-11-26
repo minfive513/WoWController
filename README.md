@@ -2,12 +2,12 @@
 
 This is a fork of ShaguController (https://github.com/shagu/ShaguController) edited to be usable with Dualshock or Xbox Controller.
 
-> WARNING: This addon changes in-game keybinds to align with the SteamDeck's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after.
+> WARNING: This addon changes in-game keybinds to align with the Controllers's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after. I am currently working on changing this to individiual keybinds you can bind yourself.
 
 ## Installation (Vanilla, 1.12)
 1. Download **[Latest Version](<repository-url>/archive/master.zip)**
 2. Unpack the Zip file
-3. Rename the folder to "WoWController" if needed
+3. Rename the folder to "WoWController"
 4. Copy "WoWController" into Wow-Directory\Interface\AddOns
 5. Restart Wow
 
@@ -16,16 +16,17 @@ This is a fork of ShaguController (https://github.com/shagu/ShaguController) edi
 The addon sets in-game keybinds based on the button mappings provided by Controller "Keyboard (WASD) and Mouse"-Layout:
 ![Mapping](screenshots/mapping.jpeg)
 
-* The A button is bound to jump
-* The Y, B and X buttons are bound to the 3 action buttons on the right side
+* The X button is bound to jump
+* The Square, Rectangle and Circle buttons are bound to the 3 action buttons on the right side
 * The D-Pad is bound to the 4 action buttons on the left side
-* The L1 and R1 buttons are used for next-target and previous-target selection
+* The R1 buttons ist used for next-target selection
++ The L1 Button is used to switch Actionbar Pages.
 * The "Tab Key" opens the world map
-* The "Left Trackpad" is bound to:
-  - Up: Toggle bags and inventory
-  - Right: Toggle quest log
-  - Down: Toggle friend list
-  - Left: Toggle spell book
+* The "Left Trackpad" is bound to the 4 actions buttons on the left
+* Right Touchpad: Toggle bags
+* Share: Toggle quest log
+* Left Touchpad: Toggle Worldmap
+* Start: (ESC) Toggle Menu
 
 ## UI Changes
 
