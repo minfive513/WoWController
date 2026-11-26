@@ -436,8 +436,8 @@ local rightX = pad + leftKeyW * 2 + pad * 2
 local left_rows = {
   { { "Space", function() key_insert(" ") end }, { "raid", function() key_insert("/raid ") end }   },
   { { "Enter", key_enter }, { "say", function() key_insert("/say ") end } },
-  { { "Backspace", key_backspace }, { "group", function() key_insert("/group ") end }},
-  { { "Close", function() ui.osk_cancel() end }, { "guild", function() key_insert("/guild ") end } },
+  { { "group", function() key_insert("/group ") end }, { "Backspace", key_backspace }},
+  { { "guild", function() key_insert("/guild ") end }, { "Close", function() ui.osk_cancel() end }},
 }
 for r = 1, table.getn(left_rows) do
   local row = left_rows[r]
@@ -553,8 +553,8 @@ kb:SetScript("OnKeyDown", function()
   local key = arg1
   if key == "LEFT" then ui.osk_move(-1, 0)
   elseif key == "RIGHT" then ui.osk_move(1, 0)
-  elseif key == "DOWN" then ui.osk_move(0, 1)
-  elseif key == "UP" then ui.osk_move(0, -1)
+  elseif key == "UP" then ui.osk_move(0, 1)
+  elseif key == "DOWN" then ui.osk_move(0, -1)
   elseif key == "ENTER" then ui.osk_pick()
   --elseif key == "2" then key_insert(" ")
   --elseif key == "1" then key_backspace()

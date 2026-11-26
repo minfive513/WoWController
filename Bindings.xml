@@ -41,4 +41,11 @@
       ToggleSpellBook(BOOKTYPE_SPELL)
     end
   </Binding>
+
+  <!-- OSK: Pick selected key -->
+  <Binding name="WOWOSKPICK" header="WOWCONTROL">
+    if WoWControllerUI and WoWControllerUI.osk_pick then
+      WoWControllerUI.osk_pick()
+    end
+  </Binding>
 </Bindings>
