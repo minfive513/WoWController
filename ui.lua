@@ -212,6 +212,8 @@ ui.chat_layout_normal = function()
   ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -189, 246)
   ChatFrame1:SetWidth(300)
   ChatFrame1:SetHeight(180)
+
+  if WoWControllerKeyboard then WoWControllerKeyboard:Hide() end
 end
 
 -- chat window layout: enlarged for the on-screen keyboard
@@ -226,6 +228,12 @@ ui.chat_layout_zoom = function()
   ChatFrame1:ClearAllPoints()
   ChatFrame1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
   ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "RIGHT", 0, -14)
+
+  if WoWControllerKeyboard then
+    WoWControllerKeyboard:Show()
+    WoWControllerKeyboard:SetFrameLevel(50)
+    WoWControllerKeyboard:Raise()
+  end
 end
 
 -- remember the default draw order so the zoom can be undone
@@ -306,6 +314,80 @@ ChatFrame1.oskHelper:SetScript("OnUpdate", function()
     this.state = 0
   end
 end)
+
+-- on-screen keyboard shown when chat is zoomed/fullscreen
+local kb = CreateFrame("Frame", "WoWControllerKeyboard", UIParent)
+kb:SetFrameStrata("FULLSCREEN")
+kb:SetWidth(640)
+kb:SetHeight(248)
+kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
+kb:EnableKeyboard(false)
+kb:Hide()
+
+local function kb_editbox()
+  local eb = ChatFrameEditBox or ChatFrame1EditBox
+  if eb then eb:Show(); eb:SetFocus() end
+  return eb
+end
+
+local function key_insert(text)
+  local eb = kb_editbox()
+  if not eb then return end
+  if eb.Insert then
+    eb:Insert(text)
+  else
+    eb:SetText(eb:GetText() .. text)
+  end
+  eb:SetFocus()
+end
+
+local function key_backspace()
+  local eb = kb_editbox()
+  if not eb then return end
+  eb:SetText(string.sub(eb:GetText() or "", 1, -2))
+  eb:SetFocus()
+end
+
+local function key_enter()
+  local eb = kb_editbox()
+  if not eb then return end
+  if ChatEdit_SendText then ChatEdit_SendText(eb, 1) end
+  eb:SetText("")
+  eb:SetFocus()
+end
+
+local function make_key(text, w, h, x, y, onclick)
+  local b = CreateFrame("Button", nil, kb, "UIPanelButtonTemplate")
+  b:SetWidth(w)
+  b:SetHeight(h)
+  b:SetPoint("TOPLEFT", kb, "TOPLEFT", x, y)
+  b:SetText(text)
+  b:SetScript("OnClick", onclick or function() key_insert(text) end)
+  return b
+end
+
+local kb_rows = {
+  {"1","2","3","4","5","6","7","8","9","0"},
+  {"q","w","e","r","t","y","u","i","o","p"},
+  {"a","s","d","f","g","h","j","k","l",";"},
+  {"z","x","c","v","b","n","m",",",".","/"},
+}
+
+local keyW, keyH, pad = 60, 44, 4
+for r = 1, table.getn(kb_rows) do
+  local row = kb_rows[r]
+  for c = 1, table.getn(row) do
+    local k = row[c]
+    local x = pad + (c - 1) * (keyW + pad)
+    local y = pad + (r - 1) * (keyH + pad)
+    make_key(k, keyW, keyH, x, y, function() key_insert(k) end)
+  end
+end
+
+local bottomY = pad + table.getn(kb_rows) * (keyH + pad)
+make_key("Space", 200, keyH, pad, bottomY, function() key_insert(" ") end)
+make_key("Backspace", 150, keyH, pad + 200 + pad, bottomY, key_backspace)
+make_key("Enter", 150, keyH, pad + 200 + pad + 150 + pad, bottomY, key_enter)
 
 ui.manage_positions = function(a1, a2, a3)
   -- run original function first
