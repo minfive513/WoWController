@@ -15,7 +15,7 @@ keybinds:SetScript("OnEvent", function()
     -- SetBinding("MOUSEWHEELDOWN", "TARGETPREVIOUSENEMY") -- L1
     -- SetBinding("MOUSEWHEELUP", "TARGETNEARESTENEMY")    -- R1
     SetBinding("1", "ACTIONBUTTON1")                    -- Y
-    SetBinding("2", "ACTIONBUTTON2")                    -- X
+    SetBinding("ENTER", "ACTIONBUTTON2")                    -- X
     SetBinding("3", "ACTIONBUTTON3")                    -- B
     SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
     -- -- Jump                                             -- A
