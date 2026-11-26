@@ -353,8 +353,8 @@ end)
 -- on-screen keyboard shown when chat is zoomed/fullscreen
 local kb = CreateFrame("Frame", "WoWControllerKeyboard", UIParent)
 kb:SetFrameStrata("FULLSCREEN")
-kb:SetWidth(798)
-kb:SetHeight(392)
+kb:SetWidth(840)
+kb:SetHeight(200)
 kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -66)
 kb:EnableKeyboard(true)
 kb:Hide()
@@ -412,7 +412,7 @@ local function key_enter()
   if ui.chat_layout_normal then ui.chat_layout_normal() end
 end
 
-local function make_key(text, w, h, x, y, onclick)
+local function make_key(text, w, h, x, y, onclick, zone, row, col)
   local b = CreateFrame("Button", nil, kb, "UIPanelButtonTemplate")
   b:SetWidth(w)
   b:SetHeight(h)
@@ -420,30 +420,33 @@ local function make_key(text, w, h, x, y, onclick)
   b:SetText(text)
   local action = onclick or function() key_insert(text) end
   b.osk_action = action
+  b.osk_zone = zone
+  b.osk_row = row
+  b.osk_col = col
   b:SetScript("OnClick", action)
   table.insert(kb.keys, b)
   return b
 end
 
 local keyW, keyH, pad = 60, 44, 4
-local leftW = 150
+local leftKeyW = 96
 local leftX = pad
-local rightX = pad + leftW + pad
+local rightX = pad + leftKeyW * 2 + pad * 2
 
-local left_keys = {
-  { "Space", function() key_insert(" ") end },
-  { "Backspace", key_backspace },
-  { "Enter", key_enter },
-  { "say", function() key_insert("/say ") end },
-  { "group", function() key_insert("/group ") end },
-  { "raid", function() key_insert("/raid ") end },
-  { "guild", function() key_insert("/guild ") end },
-  { "Close", function() ui.osk_cancel() end },
+local left_rows = {
+  { { "Space", function() key_insert(" ") end }, { "Backspace", key_backspace } },
+  { { "Enter", key_enter }, { "say", function() key_insert("/say ") end } },
+  { { "group", function() key_insert("/group ") end }, { "raid", function() key_insert("/raid ") end } },
+  { { "guild", function() key_insert("/guild ") end }, { "Close", function() ui.osk_cancel() end } },
 }
-for i = 1, table.getn(left_keys) do
-  local lk = left_keys[i]
-  local y = pad + (i - 1) * (keyH + pad)
-  make_key(lk[1], leftW, keyH, leftX, y, lk[2])
+for r = 1, table.getn(left_rows) do
+  local row = left_rows[r]
+  for c = 1, table.getn(row) do
+    local lk = row[c]
+    local x = leftX + (c - 1) * (leftKeyW + pad)
+    local y = pad + (r - 1) * (keyH + pad)
+    make_key(lk[1], leftKeyW, keyH, x, y, lk[2], "left", r, c)
+  end
 end
 
 local kb_rows = {
@@ -459,11 +462,12 @@ for r = 1, table.getn(kb_rows) do
     local k = row[c]
     local x = rightX + (c - 1) * (keyW + pad)
     local y = pad + (r - 1) * (keyH + pad)
-    make_key(k, keyW, keyH, x, y, function() key_insert(k) end)
+    make_key(k, keyW, keyH, x, y, function() key_insert(k) end, "right", r, c)
   end
 end
 
-kb:SetHeight(pad + table.getn(left_keys) * (keyH + pad))
+kb:SetWidth(rightX + table.getn(kb_rows[1]) * (keyW + pad) + pad)
+kb:SetHeight(pad + table.getn(kb_rows) * (keyH + pad))
 
 ui.osk_update_highlight = function()
   local b = kb.keys[kb.selected]
@@ -477,18 +481,44 @@ end
 ui.osk_move = function(dx, dy)
   local n = table.getn(kb.keys)
   if n == 0 then return end
+  local cur = kb.keys[kb.selected]
+  if not cur or not cur.osk_zone then
+    kb.selected = 1
+    ui.osk_update_highlight()
+    return
+  end
+
+  local zone, row, col = cur.osk_zone, cur.osk_row, cur.osk_col
+  local rightCols = 10
+  local leftCols = 2
+  local maxRows = 4
+
   if dx == 1 then
-    kb.selected = kb.selected + 1
-    if kb.selected > n then kb.selected = 1 end
+    if zone == "left" then
+      if col < leftCols then col = col + 1
+      else zone, col = "right", 1 end
+    else
+      if col < rightCols then col = col + 1 end
+    end
   elseif dx == -1 then
-    kb.selected = kb.selected - 1
-    if kb.selected < 1 then kb.selected = n end
+    if zone == "right" then
+      if col > 1 then col = col - 1
+      else zone, col = "left", leftCols end
+    else
+      if col > 1 then col = col - 1 end
+    end
   elseif dy == 1 then
-    kb.selected = kb.selected - kb.columns
-    if kb.selected < 1 then kb.selected = 1 end
+    if row < maxRows then row = row + 1 end
   elseif dy == -1 then
-    kb.selected = kb.selected + kb.columns
-    if kb.selected > n then kb.selected = n end
+    if row > 1 then row = row - 1 end
+  end
+
+  for i = 1, n do
+    local b = kb.keys[i]
+    if b.osk_zone == zone and b.osk_row == row and b.osk_col == col then
+      kb.selected = i
+      break
+    end
   end
   ui.osk_update_highlight()
 end
@@ -521,13 +551,13 @@ end)
 kb:SetScript("OnKeyDown", function()
   if not WoWControllerKeyboard:IsVisible() then return end
   local key = arg1
-  if key == "LEFT" or key == "a" then ui.osk_move(-1, 0)
-  elseif key == "RIGHT" or key == "d" then ui.osk_move(1, 0)
-  elseif key == "DOWN" or key == "w" then ui.osk_move(0, 1)
-  elseif key == "UP" or key == "s" then ui.osk_move(0, -1)
-  elseif key == "SPACE" then ui.osk_pick()
-  elseif key == "2" then key_insert(" ")
-  elseif key == "1" then key_backspace()
+  if key == "LEFT" then ui.osk_move(-1, 0)
+  elseif key == "RIGHT" then ui.osk_move(1, 0)
+  elseif key == "DOWN" then ui.osk_move(0, 1)
+  elseif key == "UP" then ui.osk_move(0, -1)
+  elseif key == "MOUSEWHEELUP" then ui.osk_pick()
+  --elseif key == "2" then key_insert(" ")
+  --elseif key == "1" then key_backspace()
   elseif key == "ESCAPE" or key == "3" then ui.osk_cancel()
   end
 end)
