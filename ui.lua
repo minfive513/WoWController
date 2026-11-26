@@ -353,8 +353,8 @@ end)
 -- on-screen keyboard shown when chat is zoomed/fullscreen
 local kb = CreateFrame("Frame", "WoWControllerKeyboard", UIParent)
 kb:SetFrameStrata("FULLSCREEN")
-kb:SetWidth(640)
-kb:SetHeight(248)
+kb:SetWidth(798)
+kb:SetHeight(392)
 kb:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, -66)
 kb:EnableKeyboard(true)
 kb:Hide()
@@ -365,8 +365,9 @@ kb.controller_mode = true
 
 kb.highlight = CreateFrame("Frame", nil, kb)
 kb.highlight:SetFrameLevel(60)
-kb.highlight:SetBackdrop({ edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 8, insets = { left = 0, right = 0, top = 0, bottom = 0 } })
-kb.highlight:SetBackdropBorderColor(1, 1, 0, 1)
+kb.highlight:SetBackdrop({ bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 8, insets = { left = 0, right = 0, top = 0, bottom = 0 } })
+kb.highlight:SetBackdropColor(1, 1, 0, 0.45)
+kb.highlight:SetBackdropBorderColor(1, 1, 1, 1)
 kb.highlight:Hide()
 
 local function kb_editbox()
@@ -424,6 +425,27 @@ local function make_key(text, w, h, x, y, onclick)
   return b
 end
 
+local keyW, keyH, pad = 60, 44, 4
+local leftW = 150
+local leftX = pad
+local rightX = pad + leftW + pad
+
+local left_keys = {
+  { "Space", function() key_insert(" ") end },
+  { "Backspace", key_backspace },
+  { "Enter", key_enter },
+  { "say", function() key_insert("/say ") end },
+  { "group", function() key_insert("/group ") end },
+  { "raid", function() key_insert("/raid ") end },
+  { "guild", function() key_insert("/guild ") end },
+  { "Close", function() ui.osk_cancel() end },
+}
+for i = 1, table.getn(left_keys) do
+  local lk = left_keys[i]
+  local y = pad + (i - 1) * (keyH + pad)
+  make_key(lk[1], leftW, keyH, leftX, y, lk[2])
+end
+
 local kb_rows = {
   {"z","x","c","v","b","n","m",",",".","/"},
   {"a","s","d","f","g","h","j","k","l",";"},
@@ -431,29 +453,17 @@ local kb_rows = {
   {"1","2","3","4","5","6","7","8","9","0"},
 }
 
-local keyW, keyH, pad = 60, 44, 4
 for r = 1, table.getn(kb_rows) do
   local row = kb_rows[r]
   for c = 1, table.getn(row) do
     local k = row[c]
-    local x = pad + (c - 1) * (keyW + pad)
+    local x = rightX + (c - 1) * (keyW + pad)
     local y = pad + (r - 1) * (keyH + pad)
     make_key(k, keyW, keyH, x, y, function() key_insert(k) end)
   end
 end
 
-local bottomY = pad + table.getn(kb_rows) * (keyH + pad)
-make_key("Space", 200, keyH, pad, bottomY, function() key_insert(" ") end)
-make_key("Backspace", 150, keyH, pad + 200 + pad, bottomY, key_backspace)
-make_key("Enter", 150, keyH, pad + 200 + pad + 150 + pad, bottomY, key_enter)
-
-local modeY = bottomY + keyH + pad
-make_key("say", 150, keyH, pad, modeY, function() key_insert("/say ") end)
-make_key("group", 150, keyH, pad + 150 + pad, modeY, function() key_insert("/group ") end)
-make_key("raid", 150, keyH, pad + (150 + pad) * 2, modeY, function() key_insert("/raid ") end)
-make_key("guild", 150, keyH, pad + (150 + pad) * 3, modeY, function() key_insert("/guild ") end)
-make_key("Close", 150, keyH, pad, modeY + keyH + pad, function() ui.osk_cancel() end)
-kb:SetHeight(modeY + keyH * 2 + pad * 3)
+kb:SetHeight(pad + table.getn(left_keys) * (keyH + pad))
 
 ui.osk_update_highlight = function()
   local b = kb.keys[kb.selected]
