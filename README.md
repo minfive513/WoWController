@@ -21,12 +21,11 @@ The addon sets in-game keybinds based on the button mappings provided by Control
 * The D-Pad is bound to the 4 action buttons on the left side
 * The R1 buttons ist used for next-target selection
 + The L1 Button is used to switch Actionbar Pages.
-* The "Tab Key" opens the world map
-* The "Left Trackpad" is bound to the 4 actions buttons on the left
-* Right Touchpad: Toggle bags
-* Share: Toggle quest log
+* The UP/DOWN/LEFT/RIGHT buttons are bound to the 4 actions buttons on the left
 * Left Touchpad: Toggle Worldmap
-* Start: (ESC) Toggle Menu
+* Right Touchpad Button toggle bags
+* Share: Toggle quest log
+* Start: (ESC) Toggle Esc Menu
 
 ## UI Changes
 
@@ -40,6 +39,7 @@ to match the gamepad layout.
 * The chat window sits in the top right corner, 5 cm away from the right edge, and got buttons removed.
 * The mouseover tooltip is raised 5 cm from its default bottom-right position.
 * Clicking on the chat window will zoom it and raise it above the rest of the UI to make space for the onscreen keyboard.
+* Added Onscreen keyboard when chatframe is in fullscreen mode
 
 ![Keyboard](screenshots/chatframeFullscreen.jpg)
 *Chat is moved, to make space for screen keyboard*
