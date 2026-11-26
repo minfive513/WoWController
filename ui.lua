@@ -200,6 +200,30 @@ local buttonmap = {
    { 12, "DISABLED" },
 }
 
+-- snapshot a frame's current anchors/scale/size
+ui.chat_save_position = function(frame)
+  local saved = { points = {}, scale = frame:GetScale(), width = frame:GetWidth(), height = frame:GetHeight() }
+  local n = frame:GetNumPoints()
+  for i = 1, n do
+    local point, relativeTo, relativePoint, x, y = frame:GetPoint(i)
+    table.insert(saved.points, { point = point, relativeTo = relativeTo or "UIParent", relativePoint = relativePoint or point, x = x or 0, y = y or 0 })
+  end
+  return saved
+end
+
+-- restore a snapshot made by ui.chat_save_position
+ui.chat_restore_position = function(frame, saved)
+  if not saved then return end
+  frame:ClearAllPoints()
+  for i = 1, table.getn(saved.points) do
+    local p = saved.points[i]
+    frame:SetPoint(p.point, p.relativeTo, p.relativePoint, p.x, p.y)
+  end
+  if saved.scale then frame:SetScale(saved.scale) end
+  if saved.width then frame:SetWidth(saved.width) end
+  if saved.height then frame:SetHeight(saved.height) end
+end
+
 -- chat window layout: 5cm inset from the right edge, above the right action buttons
 ui.chat_layout_normal = function()
   ChatFrameEditBox:ClearAllPoints()
@@ -207,11 +231,18 @@ ui.chat_layout_normal = function()
   ChatFrameEditBox:SetWidth(300)
   ChatFrameEditBox:SetScale(1)
 
-  ChatFrame1:SetScale(1)
-  ChatFrame1:ClearAllPoints()
-  ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -189, 246)
-  ChatFrame1:SetWidth(300)
-  ChatFrame1:SetHeight(180)
+  if ChatFrame1.oskSavedPos then
+    -- restore the position it had just before maximizing
+    ui.chat_restore_position(ChatFrame1, ChatFrame1.oskSavedPos)
+    ChatFrame1.oskSavedPos = nil
+  elseif not ChatFrame1.oskNormalApplied then
+    ChatFrame1:SetScale(1)
+    ChatFrame1:ClearAllPoints()
+    ChatFrame1:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -189, 246)
+    ChatFrame1:SetWidth(300)
+    ChatFrame1:SetHeight(180)
+  end
+  ChatFrame1.oskNormalApplied = 1
 
   if WoWControllerKeyboard then WoWControllerKeyboard:Hide() end
 end
@@ -219,6 +250,10 @@ end
 -- chat window layout: enlarged for the on-screen keyboard
 ui.chat_layout_zoom = function()
   ui.chat_save_layers()
+  if not ChatFrame1.oskSavedPos then
+    ChatFrame1.oskSavedPos = ui.chat_save_position(ChatFrame1)
+  end
+  ChatFrame1.oskNormalApplied = nil
   ChatFrameEditBox:ClearAllPoints()
   ChatFrameEditBox:SetPoint("TOP", UIParent, "TOP", 0, -10)
   ChatFrameEditBox:SetWidth(300)
@@ -349,11 +384,16 @@ local function key_backspace()
 end
 
 local function key_enter()
-  local eb = kb_editbox()
+  local eb = ChatFrameEditBox or ChatFrame1EditBox
   if not eb then return end
+  eb:SetFocus()
   if ChatEdit_SendText then ChatEdit_SendText(eb, 1) end
   eb:SetText("")
-  eb:SetFocus()
+  eb:ClearFocus()
+  eb:Hide()
+  if WoWControllerKeyboard then WoWControllerKeyboard:Hide() end
+  if ui.chat_restore_layers then ui.chat_restore_layers() end
+  if ui.chat_layout_normal then ui.chat_layout_normal() end
 end
 
 local function make_key(text, w, h, x, y, onclick)
