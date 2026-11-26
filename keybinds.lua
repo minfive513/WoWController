@@ -19,12 +19,12 @@ keybinds:SetScript("OnEvent", function()
     -- SetBinding("3", "ACTIONBUTTON3")                    -- B
     -- SetBinding("4", "ACTIONBUTTON4")                    -- Right-Stick click
     -- -- Jump                                             -- A
-    -- SetBinding("5", "ACTIONBUTTON5")                    -- Arrow-Up
-    -- SetBinding("6", "ACTIONBUTTON6")                   -- Arrow-Right
-    -- SetBinding("7", "ACTIONBUTTON7")                   -- Arrow-Down
-    -- SetBinding("8", "ACTIONBUTTON8")                   -- Arrow-Down
-    -- SetBinding("9", "ACTIONBUTTON9")                   -- Left-Stick-click
-    -- SaveBindings(GetCurrentBindingSet())
+    SetBinding("UP", "ACTIONBUTTON5")                    -- Arrow-Up
+    SetBinding("DOWN", "ACTIONBUTTON6")                   -- Arrow-Right
+    SetBinding("LEFT", "ACTIONBUTTON7")                   -- Arrow-Down
+    SetBinding("RIGHT", "ACTIONBUTTON8")                   -- Arrow-Down
+    SetBinding("6", "ACTIONBUTTON9")                   -- Left-Stick-click
+    SaveBindings(GetCurrentBindingSet())
 
     -- notify the player for keybind changes
     DEFAULT_CHAT_FRAME:AddMessage("|cffffcc00WoW|cffffffffController: Initialized Keybinds")

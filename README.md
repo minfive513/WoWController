@@ -2,7 +2,7 @@
 
 This is a fork of ShaguController (https://github.com/shagu/ShaguController) edited to be usable with Dualshock or Xbox Controller.
 
-> WARNING: This addon changes in-game keybinds to align with the Controllers's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after. I am currently working on changing this to individiual keybinds you can bind yourself.
+> WARNING: This addon changes in-game keybinds to align with the Controllers's 'Keyboard (WASD) and Mouse' layout. If you run this addon on your PC, you might need to restore your old keybinds manually after.
 
 ## Installation (Vanilla, 1.12)
 1. Download **[Latest Version](<repository-url>/archive/master.zip)**
